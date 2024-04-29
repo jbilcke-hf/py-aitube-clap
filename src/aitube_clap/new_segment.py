@@ -1,5 +1,5 @@
 import uuid
-from types import ClapSegment, ClapSegmentCategory, ClapOutputType, ClapSegmentStatus, ClapAuthor
+from types import ClapSegment, ClapSegmentCategory, ClapOutputType, ClapSegmentStatus, ClapAuthor, ClapAssetSource
 from helpers.is_valid_number import is_valid_number
 from helpers.generate_seed import generate_seed
 
@@ -27,6 +27,7 @@ def new_segment(maybe_segment=None):
         status=maybe_segment.get('status', ClapSegmentStatus.TO_GENERATE),
         assetUrl=maybe_segment.get('assetUrl', ""),
         assetDurationInMs=asset_duration_in_ms,
+        assetSourceType=maybe_segment.get('assetSourceType', ClapAssetSource.EMPTY),
         createdBy=maybe_segment.get('createdBy', ClapAuthor.AI),
         editedBy=maybe_segment.get('editedBy', ClapAuthor.AI),
         outputGain=maybe_segment.get('outputGain', 0) if is_valid_number(maybe_segment.get('outputGain')) else 0.0,

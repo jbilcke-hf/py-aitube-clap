@@ -165,6 +165,7 @@ class ClapSegment:
     status: ClapSegmentStatus
     assetUrl: str
     assetDurationInMs: int
+    assetSourceType: ClapAssetSource
     createdBy: ClapAuthor
     editedBy: ClapAuthor
     outputGain: float
