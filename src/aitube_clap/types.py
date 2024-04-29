@@ -56,19 +56,19 @@ class ClapAssetSource(Enum):
     PROMPT = "PROMPT"
     EMPTY = "EMPTY"
 
-class ClapModelGender(Enum):
+class ClapEntityGender(Enum):
     MALE = "male"
     FEMALE = "female"
     PERSON = "person"
     OBJECT = "object"
 
-class ClapModelAppearance(Enum):
+class ClapEntityAppearance(Enum):
     SERIOUS = "serious"
     NEUTRAL = "neutral"
     FRIENDLY = "friendly"
     CHILL = "chill"
 
-class ClapModelRegion(Enum):
+class ClapEntityRegion(Enum):
     GLOBAL = "global"
     AMERICAN = "american"
     EUROPEAN = "european"
@@ -81,12 +81,12 @@ class ClapModelRegion(Enum):
     GERMAN = "german"
     CHINESE = "chinese"
 
-class ClapModelTimbre(Enum):
+class ClapEntityTimbre(Enum):
     HIGH = "high"
     NEUTRAL = "neutral"
     DEEP = "deep"
 
-class ClapModelAudioEngine(Enum):
+class ClapEntityAudioEngine(Enum):
     ELEVEN_LABS = "ElevenLabs"
     XTTS = "XTTS"
     PARLER_TTS = "Parler-TTS"
@@ -94,18 +94,18 @@ class ClapModelAudioEngine(Enum):
 @dataclass
 class ClapVoice:
     name: str
-    gender: ClapModelGender
+    gender: ClapEntityGender
     age: int
-    region: ClapModelRegion
-    timbre: ClapModelTimbre
-    appearance: ClapModelAppearance
-    audioEngine: ClapModelAudioEngine
+    region: ClapEntityRegion
+    timbre: ClapEntityTimbre
+    appearance: ClapEntityAppearance
+    audioEngine: ClapEntityAudioEngine
     audioId: str
 
 @dataclass
 class ClapHeader:
     format: str
-    numberOfModels: int
+    numberOfEntities: int
     numberOfScenes: int
     numberOfSegments: int
 
@@ -156,7 +156,7 @@ class ClapSegment:
     startTimeInMs: int
     endTimeInMs: int
     category: ClapSegmentCategory
-    modelId: str
+    entityId: str
     sceneId: str
     prompt: str
     label: str
@@ -172,7 +172,7 @@ class ClapSegment:
     seed: int
 
 @dataclass
-class ClapModel:
+class ClapEntity:
     id: str
     category: ClapSegmentCategory
     triggerName: str
@@ -187,16 +187,16 @@ class ClapModel:
     imageId: str
     audioPrompt: str
     audioSourceType: ClapAssetSource
-    audioEngine: ClapModelAudioEngine
+    audioEngine: ClapEntityAudioEngine
     audioId: str
     age: int
-    gender: ClapModelGender
-    region: ClapModelRegion
-    appearance: ClapModelAppearance
+    gender: ClapEntityGender
+    region: ClapEntityRegion
+    appearance: ClapEntityAppearance
 
 @dataclass
 class ClapProject:
     meta: ClapMeta
-    models: List[ClapModel]
+    entities: List[ClapEntity]
     scenes: List[ClapScene]
     segments: List[ClapSegment]

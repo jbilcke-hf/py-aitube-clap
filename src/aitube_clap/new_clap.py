@@ -1,6 +1,6 @@
 
 import uuid
-from types import ClapMeta, ClapModel, ClapProject, ClapScene, ClapSegment
+from types import ClapMeta, ClapEntity, ClapProject, ClapScene, ClapSegment
 from helpers.get_valid_number import get_valid_number
 
 def new_clap(clap=None):
@@ -8,7 +8,7 @@ def new_clap(clap=None):
         clap = {}
 
     meta_data = clap.get('meta', {})
-    models = clap.get('models', [])
+    entities = clap.get('entities', [])
     scenes = clap.get('scenes', [])
     segments = clap.get('segments', [])
 
@@ -31,7 +31,7 @@ def new_clap(clap=None):
 
     return ClapProject(
         meta=meta,
-        models=models,
+        entities=entities,
         scenes=scenes,
         segments=segments
     )

@@ -4,7 +4,7 @@ import requests
 from io import BytesIO
 from typing import Union
 from uuid import uuid4
-from types import (ClapProject, ClapHeader, ClapMeta, ClapModel, ClapScene, ClapSegment,
+from types import (ClapProject, ClapHeader, ClapMeta, ClapEntity, ClapScene, ClapSegment,
                    ClapSceneEvent, ClapSegmentCategory, ClapOutputType, ClapSegmentStatus,
                    ClapAuthor)
 
@@ -51,16 +51,16 @@ def convert_to_clap_project(data: dict, debug: bool = False) -> ClapProject:
     clap_header = ClapHeader(**data[0])
     clap_meta = ClapMeta(**data[1])
     
-    models, scenes, segments = [], [], []
+    entities, scenes, segments = [], [], []
 
     index_offset = 2  # Because first two entries are header and meta
 
-    model_entries = data[index_offset:index_offset+clap_header.numberOfModels]
-    scene_entries = data[index_offset+clap_header.numberOfModels:index_offset+clap_header.numberOfModels+clap_header.numberOfScenes]
-    segment_entries = data[index_offset+clap_header.numberOfModels+clap_header.numberOfScenes:]
+    entity_entries = data[index_offset:index_offset+clap_header.numberOfEntities]
+    scene_entries = data[index_offset+clap_header.numberOfEntities:index_offset+clap_header.numberOfEntities+clap_header.numberOfScenes]
+    segment_entries = data[index_offset+clap_header.numberOfEntities+clap_header.numberOfScenes:]
 
-    for model in model_entries:
-        models.append(ClapModel(**model))
+    for entity in entity_entries:
+        entities.append(ClapEntity(**entity))
     for scene in scene_entries:
         events = [ClapSceneEvent(**event) for event in scene.get('events', [])]
         scenes.append(ClapScene(**scene, events=events))
@@ -68,6 +68,6 @@ def convert_to_clap_project(data: dict, debug: bool = False) -> ClapProject:
         segments.append(ClapSegment(**segment))
 
     if debug:
-        print(f"parse: Parsed {len(models)} models, {len(scenes)} scenes, {len(segments)} segments.")
+        print(f"parse: Parsed {len(entities)} entities, {len(scenes)} scenes, {len(segments)} segments.")
 
-    return ClapProject(meta=clap_meta, models=models, scenes=scenes, segments=segments)
+    return ClapProject(meta=clap_meta, entities=entities, scenes=scenes, segments=segments)
